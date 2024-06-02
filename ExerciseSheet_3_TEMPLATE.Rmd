@@ -83,6 +83,18 @@ Link: <https://opendata.muenchen.de/dataset/vornamen-von-neugeborenen>
     not numeric? Fix the problem in an appropriate manner, it is OK if
     some of the counts are inaccurate because of this. Explain your
     solution and the repercussions.
+```{r}
+data_2022 <- read.csv("data/open_data_portal_2022.csv", stringsAsFactors = FALSE)
+
+data_2023 <- read.csv("data/vornamen-muenchen-2023.csv", stringsAsFactors = FALSE)
+
+typeof(data_2022$Anzahl)
+typeof(data_2023$Anzahl)
+
+data_2022$Anzahl <- as.numeric(data_2022$Anzahl)
+data_2023$Anzahl <- as.numeric(data_2023$Anzahl)
+
+```
 
 ### c)  Calculate the total number of babies born in Munich in 2022
     and 2023. Which year had the bigger baby-boom?
