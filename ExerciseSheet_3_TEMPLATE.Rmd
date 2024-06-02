@@ -172,7 +172,7 @@ fat_people <- read.csv("data/Adult obesity by region - FAO (2017).csv")
 #What is the fattest continent?
 ```
     
-e)  Use R to answer your chosen question.
+### e)  Use R to answer your chosen question.
 ```{r}
 continent_avg <- fat_people %>%
   group_by(Entity) %>%
@@ -181,9 +181,17 @@ continent_avg <- fat_people %>%
 #The fattest continent is North America and Europe.
 ```
 
-f)  Create a meaningful plot / figure with the dataset. Make sure to
+### f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+ggplot(fat_people, aes(x = Year, y = Prevalence.of.obesity.in.adults..18..years.old...FAO..2017.., color = Entity)) +
+  geom_line() +
+  labs(x = "Year", y = "Prevalence of obesity (%)", title = "Obesity Prevalence Over Time by Continent") +
+  theme_minimal()
+```
 
 ## Final Note
 
