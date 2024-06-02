@@ -49,7 +49,7 @@ Advantages: Increases flexibility and reliability since you can work offline and
 
 Disadvantages: Managing large files can slow down operations and increase storage requirements. Learning and mastering Git commands can be a barrier to entry for some developers.
     
-e)  Knit this exercise sheet. Some new files will automatically be
+### e)  Knit this exercise sheet. Some new files will automatically be
     generated when knitting the sheet e.g. the HTML page. Ignore these
     files, as we only want to track the source files themselves.
 
@@ -57,11 +57,11 @@ e)  Knit this exercise sheet. Some new files will automatically be
 
 For this task you will upload your solution to GitHub.
 
-a)  Create a new repository on GitHub in your account named
+### a)  Create a new repository on GitHub in your account named
     `exeRcise-sheet-3`. Make sure you create a **public repository** so
     we are able to see it for grading. Add the link to the repository
     below:
-b)  Push your code to this new repository by copying and executing the
+### b)  Push your code to this new repository by copying and executing the
     snippet on github listed under
     `…or push an existing repository from the command line`.
 c)  Regularly push your latest changes to GitHub again and especially do
@@ -75,16 +75,16 @@ open data repository of the city of Munich for the years `2023` and
 
 Link: <https://opendata.muenchen.de/dataset/vornamen-von-neugeborenen>
 
-a)  Download the data for both years and track it in git. For small
+### a)  Download the data for both years and track it in git. For small
     datasets like these adding them to git is not a problem.
 
-b)  Load the data for both years into R. Check the type of the count
+### b)  Load the data for both years into R. Check the type of the count
     variable ("Anzahl") and look into the data to determine why it is
     not numeric? Fix the problem in an appropriate manner, it is OK if
     some of the counts are inaccurate because of this. Explain your
     solution and the repercussions.
 
-c)  Calculate the total number of babies born in Munich in 2022
+### c)  Calculate the total number of babies born in Munich in 2022
     and 2023. Which year had the bigger baby-boom?
 
 d)  Add a new column `year` to both datasets which holds the correct
