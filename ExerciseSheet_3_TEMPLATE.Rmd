@@ -168,10 +168,19 @@ determining the research question yourself.
     within one sentence. It should be a question that can be answered
     with the dataset and using R.
 ```{r}
-
+fat_people <- read.csv("data/Adult obesity by region - FAO (2017).csv")
+#What is the fattest continent?
 ```
     
 e)  Use R to answer your chosen question.
+```{r}
+continent_avg <- fat_people %>%
+  group_by(Entity) %>%
+  summarize(avg_obesity = mean(Prevalence.of.obesity.in.adults..18..years.old...FAO..2017.., na.rm = TRUE)) %>%
+  arrange(desc(avg_obesity))
+#The fattest continent is North America and Europe.
+```
+
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
