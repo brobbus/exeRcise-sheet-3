@@ -155,19 +155,22 @@ This exercise is a bit more open-ended. You can choose any dataset from
 [Our World in Data](https://ourworldindata.org/) and analyze it, while
 determining the research question yourself.
 
-a)  Go to <https://github.com/owid/owid-datasets/tree/master/datasets>
+### a)  Go to <https://github.com/owid/owid-datasets/tree/master/datasets>
     and choose a dataset that interests you. You can have a look at
     <https://ourworldindata.org/> to gather some inspiration.
-b)  Download the dataset and track it in git.
-c)  Put the name / title of the dataset and a link to it below.
+### b)  Download the dataset and track it in git.
+### c)  Put the name / title of the dataset and a link to it below.
 
--   Dataset Name: ...
--   Link: <https://github.com/owid/owid-datasets/>...
-
-d)  Come up with a (research) question you want to answer with the data
+-   Dataset Name: Adding Adult obesity by region - FAO (2017)
+-   Link: https://github.com/owid/owid-datasets/blob/master/datasets/Adult%20obesity%20by%20region%20-%20FAO%20(2017)/Adult%20obesity%20by%20region%20-%20FAO%20(2017).csv
+### d)  Come up with a (research) question you want to answer with the data
     and briefly explain why you believe this is an interesting question
     within one sentence. It should be a question that can be answered
     with the dataset and using R.
+```{r}
+
+```
+    
 e)  Use R to answer your chosen question.
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
