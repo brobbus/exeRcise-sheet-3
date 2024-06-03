@@ -1,7 +1,7 @@
 ---
-title: "Exercise #X"
+title: "Exercise #3"
 subtitle: "Fortgeschrittene Statistische Software für NF"
-author: "Name (Martrikelnummer), Name (Martrikelnummer), ..."
+author: "Brendan Kearney (12584004), Eva Thoma (12546840), Dilara Tuncyürek (12629737)"
 date: "`r Sys.Date()`"
 output: distill::distill_article
 ---
@@ -45,9 +45,13 @@ in git.
 ### d)  Name 2 strengths and 2 weaknesses of git. (Don't forget to create a
     commit after this answer, see *1c*)
     
-Advantages: Increases flexibility and reliability since you can work offline and only share your changes when you're ready. Changes can be easily integrated.
+Advantages:
+1. Increases flexibility and reliability since you can work offline and only share your changes when you're ready. 
+2. Changes can be easily integrated.
 
-Disadvantages: Managing large files can slow down operations and increase storage requirements. Learning and mastering Git commands can be a barrier to entry for some developers.
+Disadvantages: 
+1. Managing large files can slow down operations and increase storage requirements. 
+2. Learning and mastering Git commands can be a barrier to entry for some developers.
     
 ### e)  Knit this exercise sheet. Some new files will automatically be
     generated when knitting the sheet e.g. the HTML page. Ignore these
@@ -60,11 +64,11 @@ For this task you will upload your solution to GitHub.
 ### a)  Create a new repository on GitHub in your account named
     `exeRcise-sheet-3`. Make sure you create a **public repository** so
     we are able to see it for grading. Add the link to the repository
-    below:
+    below: https://github.com/brobbus/exeRcise-sheet-3
 ### b)  Push your code to this new repository by copying and executing the
     snippet on github listed under
     `…or push an existing repository from the command line`.
-c)  Regularly push your latest changes to GitHub again and especially do
+### c)  Regularly push your latest changes to GitHub again and especially do
     so when you are finished with this sheet.
 
 ## Exercise 3: Baby-Names in Munich (3.5 Points)
@@ -84,16 +88,19 @@ Link: <https://opendata.muenchen.de/dataset/vornamen-von-neugeborenen>
     some of the counts are inaccurate because of this. Explain your
     solution and the repercussions.
 ```{r}
-data_2022 <- read.csv("data/open_data_portal_2022.csv", stringsAsFactors = FALSE)
+library(tidyverse)
+data_2022 <- read_csv("data/open_data_portal_2022.csv")
 
-data_2023 <- read.csv("data/vornamen-muenchen-2023.csv", stringsAsFactors = FALSE)
+data_2023 <- read_csv("data/vornamen-muenchen-2023.csv")
 
 typeof(data_2022$Anzahl)
 typeof(data_2023$Anzahl)
 
-data_2022$Anzahl <- as.numeric(data_2022$Anzahl)
-data_2023$Anzahl <- as.numeric(data_2023$Anzahl)
-
+data_2022 <- data_2022 %>%
+  mutate(Anzahl = parse_number(Anzahl))
+data_2023 <- data_2023 %>%
+  mutate(Anzahl = parse_number(Anzahl))
+#parse_number removes all non-numeric content and converts the contents of columm "Anzahl" into numeric values. However, the information "4 or less" is lost. 
 ```
 
 ### c)  Calculate the total number of babies born in Munich in 2022
@@ -113,8 +120,6 @@ data_2023$year <- 2023
 
 ### e)  Combine both datasets into one using `bind_rows()`.
 ```{r}
-install.packages("dplyr")
-library(dplyr)
 combined_data <- bind_rows(data_2022, data_2023)
 ```
 
@@ -122,10 +127,13 @@ combined_data <- bind_rows(data_2022, data_2023)
     names across both years. Print out the top 10 names in a nicely
     formatted table for both years. Include a table caption.
 ```{r}
-combined_data <- combined_data %>%
+combined_data %>%
   group_by(Vorname) %>%
   summarize(Total_Count = sum(Anzahl, na.rm = TRUE)) %>%
-  arrange(desc(Total_Count))
+  arrange(desc(Total_Count)) %>%
+  head(10) %>%
+  knitr::kable(caption = "Top 10 Namen für die Jahre 2022 und 2023") %>%
+  kableExtra::kable_minimal()
 
 top_10_names_2022 <- head(combined_data, n = 10) %>%
   mutate(Year = 2022) %>%
@@ -169,29 +177,87 @@ determining the research question yourself.
     with the dataset and using R.
 ```{r}
 fat_people <- read.csv("data/Adult obesity by region - FAO (2017).csv")
-#What is the fattest continent?
 ```
-    
+ Research Question:
+How much did the number of overweight adults change around the world and in different continents between 1975 and 2014?
+
+Brief Explanation:
+We want to see how many adults became overweight over the years, and if it was different depending on where they lived. This helps us understand how the problem of being overweight has changed and what areas need more help.
+   
 ### e)  Use R to answer your chosen question.
 ```{r}
+library(dplyr)
+library(tidyr)
+
+# Step 1: Calculate prevalence of obesity in earliest and latest years for each region 
+earliest_year <- min(fat_people$Year)
+latest_year <- max(fat_people$Year)
+
+obesity_prevalence <- fat_people %>%
+  filter(Year %in% c(earliest_year, latest_year)) %>%
+  pivot_wider(names_from = Year, values_from = Prevalence.of.obesity.in.adults..18..years.old...FAO..2017..) %>%
+  rename(obesity_earliest = `1975`, obesity_latest = `2014`) %>%
+  mutate(change_in_obesity = obesity_latest - obesity_earliest)
+
+# Step 2: Calculate the difference in obesity rates between the earliest and latest years for each region 
+change_in_obesity <- obesity_prevalence %>%
+  select(Entity, change_in_obesity) %>%
+  arrange(desc(change_in_obesity))
+
+# Step 3: Visualize the change in obesity rates over time and across regions 
+ggplot(change_in_obesity, aes(x = reorder(Entity, change_in_obesity), y = change_in_obesity)) +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
+  labs(x = "Region", y = "Change in Obesity Rate (%)",
+       title = "Change in Obesity Rate Between Earliest and Latest Years by Region") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
 continent_avg <- fat_people %>%
   group_by(Entity) %>%
   summarize(avg_obesity = mean(Prevalence.of.obesity.in.adults..18..years.old...FAO..2017.., na.rm = TRUE)) %>%
   arrange(desc(avg_obesity))
-#The fattest continent is North America and Europe.
+
 ```
+North America and Europe are on average the continents with the most obese people. However, the growth in Oceania has been the biggest. On average obesity worldwide has been about 8.3% higher in 2014 than it was in 1975. 
 
 ### f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
 ```{r}
+#simple code
 install.packages("tidyverse")
 library(tidyverse)
 ggplot(fat_people, aes(x = Year, y = Prevalence.of.obesity.in.adults..18..years.old...FAO..2017.., color = Entity)) +
   geom_line() +
   labs(x = "Year", y = "Prevalence of obesity (%)", title = "Obesity Prevalence Over Time by Continent") +
   theme_minimal()
+
+install.packages("gganimate")
+install.packages("gifski")
+install.packages("transformr")
+
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(gganimate)
+#animation
+anime <- ggplot(fat_people, 
+               aes(
+                 x = Year, 
+                 y = Prevalence.of.obesity.in.adults..18..years.old...FAO..2017.., 
+                 color = Entity)) +
+  geom_point(alpha = 0.6) +
+  scale_x_log10() +
+  theme_bw(base_size = 8) +
+  labs(title = "Trends in Adult Obesity Rates by Region (1975-2014)",
+       x = "Year",
+       y = "Prevalence of obesity",
+       color = "Entity") +
+  theme_minimal() +
+  transition_time(Year)
+
+anime
 ```
+
 
 ## Final Note
 
