@@ -132,6 +132,7 @@ combined_data <- bind_rows(data_2022, data_2023)
     names across both years. Print out the top 10 names in a nicely
     formatted table for both years. Include a table caption.
 ```{r}
+
 top_10_names_2022 <- head(combined_data, n = 10) %>%
   mutate(year = 2022) %>%
   select(year, Vorname, Anzahl)
