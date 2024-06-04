@@ -223,6 +223,7 @@ North America and Europe are on average the continents with the most obese peopl
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
 ```{r}
+
 #simple code
 install.packages("tidyverse")
 library(tidyverse)
