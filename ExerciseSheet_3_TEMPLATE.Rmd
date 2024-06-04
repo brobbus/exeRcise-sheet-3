@@ -174,6 +174,7 @@ determining the research question yourself.
     within one sentence. It should be a question that can be answered
     with the dataset and using R.
 ```{r}
+
 fat_people <- read.csv("data/Adult obesity by region - FAO (2017).csv")
 ```
  Research Question:
