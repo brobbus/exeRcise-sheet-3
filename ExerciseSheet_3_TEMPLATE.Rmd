@@ -117,6 +117,7 @@ sum(data_2023$Anzahl, na.rm = TRUE)
 ### d)  Add a new column `year` to both datasets which holds the correct
     year for each.
 ```{r}
+
 data_2022$year <- 2022
 data_2023$year <- 2023
 ```
