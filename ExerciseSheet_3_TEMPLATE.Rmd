@@ -127,21 +127,13 @@ combined_data <- bind_rows(data_2022, data_2023)
     names across both years. Print out the top 10 names in a nicely
     formatted table for both years. Include a table caption.
 ```{r}
-combined_data %>%
-  group_by(Vorname) %>%
-  summarize(Total_Count = sum(Anzahl, na.rm = TRUE)) %>%
-  arrange(desc(Total_Count)) %>%
-  head(10) %>%
-  knitr::kable(caption = "Top 10 Namen für die Jahre 2022 und 2023") %>%
-  kableExtra::kable_minimal()
-
 top_10_names_2022 <- head(combined_data, n = 10) %>%
-  mutate(Year = 2022) %>%
-  select(Year, Vorname, Total_Count)
+  mutate(year = 2022) %>%
+  select(year, Vorname, Anzahl)
 
 top_10_names_2023 <- head(combined_data, n = 10) %>%
   mutate(Year = 2023) %>%
-  select(Year, Vorname, Total_Count)
+  select(Year, Vorname, Anzahl)
 
 install.packages("kableExtra")
 library(kableExtra)
