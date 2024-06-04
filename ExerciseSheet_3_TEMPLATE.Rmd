@@ -89,6 +89,7 @@ Link: <https://opendata.muenchen.de/dataset/vornamen-von-neugeborenen>
     some of the counts are inaccurate because of this. Explain your
     solution and the repercussions.
 ```{r}
+
 library(tidyverse)
 data_2022 <- read_csv("data/open_data_portal_2022.csv")
 
