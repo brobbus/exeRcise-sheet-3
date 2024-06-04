@@ -124,6 +124,7 @@ data_2023$year <- 2023
 
 ### e)  Combine both datasets into one using `bind_rows()`.
 ```{r}
+
 combined_data <- bind_rows(data_2022, data_2023)
 ```
 
