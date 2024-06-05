@@ -189,7 +189,7 @@ We want to see how many adults became overweight over the years, and if it was d
 library(dplyr)
 library(tidyr)
 
-# Step 1: Calculate prevalence of obesity in earliest and latest years for each region 
+ 
 earliest_year <- min(fat_people$Year)
 latest_year <- max(fat_people$Year)
 
@@ -199,12 +199,12 @@ obesity_prevalence <- fat_people %>%
   rename(obesity_earliest = `1975`, obesity_latest = `2014`) %>%
   mutate(change_in_obesity = obesity_latest - obesity_earliest)
 
-# Step 2: Calculate the difference in obesity rates between the earliest and latest years for each region 
+
 change_in_obesity <- obesity_prevalence %>%
   select(Entity, change_in_obesity) %>%
   arrange(desc(change_in_obesity))
 
-# Step 3: Visualize the change in obesity rates over time and across regions 
+
 ggplot(change_in_obesity, aes(x = reorder(Entity, change_in_obesity), y = change_in_obesity)) +
   geom_bar(stat = "identity", fill = "skyblue", color = "black") +
   labs(x = "Region", y = "Change in Obesity Rate (%)",
